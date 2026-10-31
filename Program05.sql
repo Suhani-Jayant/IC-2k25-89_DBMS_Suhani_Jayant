@@ -3,4 +3,3 @@ CREATE TABLE countries_null (
     country_name VARCHAR(50) NULL,
     region_id INT NULL
 );
-DESC countries;
