@@ -1,0 +1,172 @@
+SQL Assignment - Questions 1 to 11
+Database: MySQL | Table: employees
+============================================================
+
+Employees Table (data used for all outputs)
+
+employee_id | first_name | last_name | job_id | salary | department_id | hire_date
+------------+------------+-----------+--------+--------+---------------+-----------
+101         | Ellen      | Abel      | 1      | 11000  | 30            | 1987-03-15
+102         | Sundar     | Ande      | 2      | 12000  | 30            | 1987-06-20
+103         | Mozhe      | Atkinson  | 3      | 9000   | 100           | 1987-08-10
+104         | David      | Austin    | 4      | 15000  | 100           | NULL
+105         | Hermann    | Baer      | 5      | 20000  | 100           | NULL
+
+NULL = value not available in the provided data.
+
+============================================================
+Q1. Display employees whose salary is not between 10000 and 15000.
+
+SQL Query:
+SELECT first_name, last_name, salary
+FROM employees
+WHERE salary NOT BETWEEN 10000 AND 15000;
+
+Output:
+first_name | last_name | salary
+-----------+-----------+-------
+Mozhe      | Atkinson  | 9000
+Hermann    | Baer      | 20000
+
+============================================================
+Q2. Display employees in departments 30 or 100 in ascending order.
+
+SQL Query:
+SELECT first_name, last_name, department_id
+FROM employees
+WHERE department_id IN (30, 100)
+ORDER BY department_id ASC;
+
+Output:
+first_name | last_name | department_id
+-----------+-----------+--------------
+Ellen      | Abel      | 30
+Sundar     | Ande      | 30
+Mozhe      | Atkinson  | 100
+David      | Austin    | 100
+Hermann    | Baer      | 100
+
+============================================================
+Q3. Display employees whose salary is not between 10000 and 15000 and belong to departments 30 or 100.
+
+SQL Query:
+SELECT first_name, last_name, salary
+FROM employees
+WHERE salary NOT BETWEEN 10000 AND 15000
+AND department_id IN (30, 100);
+
+Output:
+first_name | last_name | salary
+-----------+-----------+-------
+Mozhe      | Atkinson  | 9000
+Hermann    | Baer      | 20000
+
+============================================================
+Q4. Display employees hired in 1987.
+
+SQL Query:
+SELECT first_name, last_name, hire_date
+FROM employees
+WHERE YEAR(hire_date) = 1987;
+
+Output:
+first_name | last_name | hire_date
+-----------+-----------+-----------
+Ellen      | Abel      | 1987-03-15
+Sundar     | Ande      | 1987-06-20
+Mozhe      | Atkinson  | 1987-08-10
+
+============================================================
+Q5. Display first names containing both b and c.
+
+SQL Query:
+SELECT first_name
+FROM employees
+WHERE first_name LIKE '%b%'
+AND first_name LIKE '%c%';
+
+Output:
+Empty set (0 rows returned)
+
+============================================================
+Q6. Display last name, job and salary of Programmers or Shipping Clerks, excluding salaries 4500, 10000 and 15000.
+
+SQL Query:
+SELECT last_name, job_id, salary
+FROM employees
+WHERE job_id IN ('IT_PROG', 'SH_CLERK')
+AND salary NOT IN (4500, 10000, 15000);
+
+Output:
+Empty set (0 rows returned)
+
+============================================================
+Q7. Display last names having exactly 6 characters.
+
+SQL Query:
+SELECT last_name
+FROM employees
+WHERE CHAR_LENGTH(last_name) = 6;
+
+Output:
+last_name
+---------
+Austin
+
+============================================================
+Q8. Display last names having e as the third character.
+
+SQL Query:
+SELECT last_name
+FROM employees
+WHERE last_name LIKE '__e%';
+
+Output:
+last_name
+---------
+Abel
+Baer
+
+============================================================
+Q9. Display distinct jobs/designations available in employees table.
+
+SQL Query:
+SELECT DISTINCT job_id
+FROM employees;
+
+Output:
+job_id
+------
+1
+2
+3
+4
+5
+
+============================================================
+Q10. Display employee name, salary and PF (15% of salary).
+
+SQL Query:
+SELECT first_name, last_name, salary,
+       salary * 0.15 AS PF
+FROM employees;
+
+Output:
+first_name | last_name | salary | PF
+-----------+-----------+--------+-----
+Ellen      | Abel      | 11000  | 1650
+Sundar     | Ande      | 12000  | 1800
+Mozhe      | Atkinson  | 9000   | 1350
+David      | Austin    | 15000  | 2250
+Hermann    | Baer      | 20000  | 3000
+
+============================================================
+Q11. Display all records where last name is BLAKE, SCOTT, KING or FORD.
+
+SQL Query:
+SELECT *
+FROM employees
+WHERE UPPER(last_name) IN ('BLAKE', 'SCOTT', 'KING', 'FORD');
+
+Output:
+Empty set (0 rows returned)
