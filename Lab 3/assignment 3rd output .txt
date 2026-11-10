@@ -1,0 +1,406 @@
+MySQL DBMS - SELECT Query Assignment
+MCA 3rd Semester
+Database: hr | Table: employees
+
+Run first:  USE hr;
+
+Note: queries returning all 107 rows show only the first 10 rows of output.
+
+======================================================================
+Question 1: Write a query to display the names (first_name, last_name) using alias name "First Name", "Last Name".
+
+SQL Query:
+SELECT first_name AS 'First Name',
+       last_name  AS 'Last Name'
+FROM employees;
+
+Output:
++------------+-----------+
+| First Name | Last Name |
++------------+-----------+
+| Steven     | King      |
+| Neena      | Kochhar   |
+| Lex        | De Haan   |
+| Alexander  | Hunold    |
+| Bruce      | Ernst     |
+| David      | Austin    |
+| Valli      | Pataballa |
+| Diana      | Lorentz   |
+| Nancy      | Greenberg |
+| Daniel     | Faviet    |
++------------+-----------+
+Note: 107 rows returned in MySQL Workbench; first 10 rows shown here.
+
+======================================================================
+Question 2: Write a query to get unique department ID from employee table.
+
+SQL Query:
+SELECT DISTINCT department_id
+FROM employees;
+
+Output:
++---------------+
+| department_id |
++---------------+
+| 90            |
+| 60            |
+| 100           |
+| 30            |
+| 50            |
+| 80            |
+| NULL          |
+| 10            |
+| 20            |
+| 40            |
+| 70            |
+| 110           |
++---------------+
+Note: 12 distinct values (one employee, Kimberely Grant, has no department, shown as NULL). Row order may vary.
+
+======================================================================
+Question 3: Write a query to get all employee details from the employee table order by first name, descending.
+
+SQL Query:
+SELECT *
+FROM employees
+ORDER BY first_name DESC;
+
+Output:
++-------------+------------+-----------+----------+--------------------+------------+------------+---------+----------------+------------+---------------+
+| employee_id | first_name | last_name | email    | phone_number       | hire_date  | job_id     | salary  | commission_pct | manager_id | department_id |
++-------------+------------+-----------+----------+--------------------+------------+------------+---------+----------------+------------+---------------+
+| 180         | Winston    | Taylor    | WTAYLOR  | 650.507.9876       | 1998-01-24 | SH_CLERK   | 3200.00 | NULL           | 120        | 50            |
+| 171         | William    | Smith     | WSMITH   | 011.44.1343.629268 | 1999-02-23 | SA_REP     | 7400.00 | 0.15           | 148        | 80            |
+| 206         | William    | Gietz     | WGIETZ   | 515.123.8181       | 1994-06-07 | AC_ACCOUNT | 8300.00 | NULL           | 205        | 110           |
+| 195         | Vance      | Jones     | VJONES   | 650.501.4876       | 2000-03-17 | SH_CLERK   | 2800.00 | NULL           | 122        | 50            |
+| 106         | Valli      | Pataballa | VPATABAL | 590.423.4560       | 1998-02-05 | IT_PROG    | 4800.00 | NULL           | 103        | 60            |
+| 141         | Trenna     | Rajs      | TRAJS    | 650.121.8009       | 1995-10-17 | ST_CLERK   | 3500.00 | NULL           | 124        | 50            |
+| 132         | TJ         | Olson     | TJOLSON  | 650.124.8234       | 1999-04-10 | ST_CLERK   | 2100.00 | NULL           | 121        | 50            |
+| 190         | Timothy    | Gates     | TGATES   | 650.505.3876       | 1998-07-11 | SH_CLERK   | 2900.00 | NULL           | 122        | 50            |
+| 170         | Tayler     | Fox       | TFOX     | 011.44.1343.729268 | 1998-01-24 | SA_REP     | 9600.00 | 0.20           | 148        | 80            |
+| 203         | Susan      | Mavris    | SMAVRIS  | 515.123.7777       | 1994-06-07 | HR_REP     | 6500.00 | NULL           | 101        | 40            |
++-------------+------------+-----------+----------+--------------------+------------+------------+---------+----------------+------------+---------------+
+Note: 107 rows returned in MySQL Workbench; first 10 rows shown here.
+
+======================================================================
+Question 4: Write a query to get the names (first_name, last_name), salary, PF of all the employees (PF is calculated as 15% of salary).
+
+SQL Query:
+SELECT first_name, last_name, salary,
+       salary * 0.15 AS PF
+FROM employees;
+
+Output:
++------------+-----------+----------+-----------+
+| first_name | last_name | salary   | PF        |
++------------+-----------+----------+-----------+
+| Steven     | King      | 24000.00 | 3600.0000 |
+| Neena      | Kochhar   | 17000.00 | 2550.0000 |
+| Lex        | De Haan   | 17000.00 | 2550.0000 |
+| Alexander  | Hunold    | 9000.00  | 1350.0000 |
+| Bruce      | Ernst     | 6000.00  | 900.0000  |
+| David      | Austin    | 4800.00  | 720.0000  |
+| Valli      | Pataballa | 4800.00  | 720.0000  |
+| Diana      | Lorentz   | 4200.00  | 630.0000  |
+| Nancy      | Greenberg | 12000.00 | 1800.0000 |
+| Daniel     | Faviet    | 9000.00  | 1350.0000 |
++------------+-----------+----------+-----------+
+Note: 107 rows returned in MySQL Workbench; first 10 rows shown here.
+
+======================================================================
+Question 5: Write a query to get the employee ID, names (first_name, last_name), salary in ascending order of salary.
+
+SQL Query:
+SELECT employee_id, first_name, last_name, salary
+FROM employees
+ORDER BY salary ASC;
+
+Output:
++-------------+------------+------------+---------+
+| employee_id | first_name | last_name  | salary  |
++-------------+------------+------------+---------+
+| 132         | TJ         | Olson      | 2100.00 |
+| 128         | Steven     | Markle     | 2200.00 |
+| 136         | Hazel      | Philtanker | 2200.00 |
+| 127         | James      | Landry     | 2400.00 |
+| 135         | Ki         | Gee        | 2400.00 |
+| 119         | Karen      | Colmenares | 2500.00 |
+| 131         | James      | Marlow     | 2500.00 |
+| 140         | Joshua     | Patel      | 2500.00 |
+| 144         | Peter      | Vargas     | 2500.00 |
+| 182         | Martha     | Sullivan   | 2500.00 |
++-------------+------------+------------+---------+
+Note: 107 rows returned in MySQL Workbench; first 10 rows shown here. Employees with equal salary may appear in a different order.
+
+======================================================================
+Question 6: Write a query to get the total salaries payable to employees.
+
+SQL Query:
+SELECT SUM(salary) AS 'Total Salary'
+FROM employees;
+
+Output:
++--------------+
+| Total Salary |
++--------------+
+| 691400.00    |
++--------------+
+
+======================================================================
+Question 7: Write a query to get the maximum and minimum salary from employees table.
+
+SQL Query:
+SELECT MAX(salary) AS 'Maximum Salary',
+       MIN(salary) AS 'Minimum Salary'
+FROM employees;
+
+Output:
++----------------+----------------+
+| Maximum Salary | Minimum Salary |
++----------------+----------------+
+| 24000.00       | 2100.00        |
++----------------+----------------+
+
+======================================================================
+Question 8: Write a query to get the average salary and number of employees in the employees table.
+
+SQL Query:
+SELECT AVG(salary) AS 'Average Salary',
+       COUNT(*)    AS 'Number of Employees'
+FROM employees;
+
+Output:
++----------------+---------------------+
+| Average Salary | Number of Employees |
++----------------+---------------------+
+| 6461.682243    | 107                 |
++----------------+---------------------+
+
+======================================================================
+Question 9: Write a query to get the number of employees working with the company.
+
+SQL Query:
+SELECT COUNT(*) AS 'Number of Employees'
+FROM employees;
+
+Output:
++---------------------+
+| Number of Employees |
++---------------------+
+| 107                 |
++---------------------+
+
+======================================================================
+Question 10: Write a query to get the number of jobs available in the employees table.
+
+SQL Query:
+SELECT COUNT(DISTINCT job_id) AS 'Number of Jobs'
+FROM employees;
+
+Output:
++----------------+
+| Number of Jobs |
++----------------+
+| 19             |
++----------------+
+
+======================================================================
+Question 11: Write a query to get all first name from employees table in upper case.
+
+SQL Query:
+SELECT UPPER(first_name) AS 'First Name (Upper)'
+FROM employees;
+
+Output:
++--------------------+
+| First Name (Upper) |
++--------------------+
+| STEVEN             |
+| NEENA              |
+| LEX                |
+| ALEXANDER          |
+| BRUCE              |
+| DAVID              |
+| VALLI              |
+| DIANA              |
+| NANCY              |
+| DANIEL             |
++--------------------+
+Note: 107 rows returned in MySQL Workbench; first 10 rows shown here.
+
+======================================================================
+Question 12: Write a query to get the first 3 characters of first name from employees table.
+
+SQL Query:
+SELECT SUBSTRING(first_name, 1, 3) AS 'First 3 Characters'
+FROM employees;
+
+Output:
++--------------------+
+| First 3 Characters |
++--------------------+
+| Ste                |
+| Nee                |
+| Lex                |
+| Ale                |
+| Bru                |
+| Dav                |
+| Val                |
+| Dia                |
+| Nan                |
+| Dan                |
++--------------------+
+Note: 107 rows returned in MySQL Workbench; first 10 rows shown here.
+
+======================================================================
+Question 13: Write a query to calculate 171*214+625.
+
+SQL Query:
+SELECT 171 * 214 + 625 AS Result;
+
+Output:
++--------+
+| Result |
++--------+
+| 37219  |
++--------+
+Calculation: 171 × 214 = 36594; 36594 + 625 = 37219.
+
+======================================================================
+Question 14: Write a query to get the names (for example Ellen Abel, Sundar Ande etc.) of all the employees from employees table.
+
+SQL Query:
+SELECT CONCAT(first_name, ' ', last_name) AS 'Employee Name'
+FROM employees;
+
+Output:
++------------------+
+| Employee Name    |
++------------------+
+| Steven King      |
+| Neena Kochhar    |
+| Lex De Haan      |
+| Alexander Hunold |
+| Bruce Ernst      |
+| David Austin     |
+| Valli Pataballa  |
+| Diana Lorentz    |
+| Nancy Greenberg  |
+| Daniel Faviet    |
++------------------+
+Note: 107 rows returned in MySQL Workbench; first 10 rows shown here.
+
+======================================================================
+Question 15: Write a query to get first name from employees table after removing white spaces from both side.
+
+SQL Query:
+SELECT TRIM(first_name) AS 'First Name'
+FROM employees;
+
+Output:
++------------+
+| First Name |
++------------+
+| Steven     |
+| Neena      |
+| Lex        |
+| Alexander  |
+| Bruce      |
+| David      |
+| Valli      |
+| Diana      |
+| Nancy      |
+| Daniel     |
++------------+
+Note: 107 rows returned in MySQL Workbench; first 10 rows shown here.
+
+======================================================================
+Question 16: Write a query to get the length of the employee names (first_name, last_name) from employees table.
+
+SQL Query:
+SELECT first_name, last_name,
+       LENGTH(first_name) AS 'Length of First Name',
+       LENGTH(last_name)  AS 'Length of Last Name'
+FROM employees;
+
+Output:
++------------+-----------+----------------------+---------------------+
+| first_name | last_name | Length of First Name | Length of Last Name |
++------------+-----------+----------------------+---------------------+
+| Steven     | King      | 6                    | 4                   |
+| Neena      | Kochhar   | 5                    | 7                   |
+| Lex        | De Haan   | 3                    | 7                   |
+| Alexander  | Hunold    | 9                    | 6                   |
+| Bruce      | Ernst     | 5                    | 5                   |
+| David      | Austin    | 5                    | 6                   |
+| Valli      | Pataballa | 5                    | 9                   |
+| Diana      | Lorentz   | 5                    | 7                   |
+| Nancy      | Greenberg | 5                    | 9                   |
+| Daniel     | Faviet    | 6                    | 6                   |
++------------+-----------+----------------------+---------------------+
+Note: 107 rows returned in MySQL Workbench; first 10 rows shown here.
+
+======================================================================
+Question 17: Write a query to check if the first_name fields of the employees table contains numbers.
+
+SQL Query:
+SELECT *
+FROM employees
+WHERE first_name REGEXP '[0-9]';
+
+Output:
++--------------------+
+| Result             |
++--------------------+
+| Empty set (0 rows) |
++--------------------+
+No first_name in the employees table contains a digit, so the query returns no rows.
+
+======================================================================
+Question 18: Write a query to select first 10 records from a table.
+
+SQL Query:
+SELECT *
+FROM employees
+LIMIT 10;
+
+Output:
++-------------+------------+-----------+----------+--------------+------------+------------+----------+----------------+------------+---------------+
+| employee_id | first_name | last_name | email    | phone_number | hire_date  | job_id     | salary   | commission_pct | manager_id | department_id |
++-------------+------------+-----------+----------+--------------+------------+------------+----------+----------------+------------+---------------+
+| 100         | Steven     | King      | SKING    | 515.123.4567 | 1987-06-17 | AD_PRES    | 24000.00 | NULL           | NULL       | 90            |
+| 101         | Neena      | Kochhar   | NKOCHHAR | 515.123.4568 | 1989-09-21 | AD_VP      | 17000.00 | NULL           | 100        | 90            |
+| 102         | Lex        | De Haan   | LDEHAAN  | 515.123.4569 | 1993-01-13 | AD_VP      | 17000.00 | NULL           | 100        | 90            |
+| 103         | Alexander  | Hunold    | AHUNOLD  | 590.423.4567 | 1990-01-03 | IT_PROG    | 9000.00  | NULL           | 102        | 60            |
+| 104         | Bruce      | Ernst     | BERNST   | 590.423.4568 | 1991-05-21 | IT_PROG    | 6000.00  | NULL           | 103        | 60            |
+| 105         | David      | Austin    | DAUSTIN  | 590.423.4569 | 1997-06-25 | IT_PROG    | 4800.00  | NULL           | 103        | 60            |
+| 106         | Valli      | Pataballa | VPATABAL | 590.423.4560 | 1998-02-05 | IT_PROG    | 4800.00  | NULL           | 103        | 60            |
+| 107         | Diana      | Lorentz   | DLORENTZ | 590.423.5567 | 1999-02-07 | IT_PROG    | 4200.00  | NULL           | 103        | 60            |
+| 108         | Nancy      | Greenberg | NGREENBE | 515.124.4569 | 1994-08-17 | FI_MGR     | 12000.00 | NULL           | 101        | 100           |
+| 109         | Daniel     | Faviet    | DFAVIET  | 515.124.4169 | 1994-08-16 | FI_ACCOUNT | 9000.00  | NULL           | 108        | 100           |
++-------------+------------+-----------+----------+--------------+------------+------------+----------+----------------+------------+---------------+
+
+======================================================================
+Question 19: Write a query to get monthly salary (round 2 decimal places) of each and every employee. Assume salary field provides annual salary information.
+
+SQL Query:
+SELECT first_name, last_name,
+       ROUND(salary / 12, 2) AS 'Monthly Salary'
+FROM employees;
+
+Output:
++------------+-----------+----------------+
+| first_name | last_name | Monthly Salary |
++------------+-----------+----------------+
+| Steven     | King      | 2000.00        |
+| Neena      | Kochhar   | 1416.67        |
+| Lex        | De Haan   | 1416.67        |
+| Alexander  | Hunold    | 750.00         |
+| Bruce      | Ernst     | 500.00         |
+| David      | Austin    | 400.00         |
+| Valli      | Pataballa | 400.00         |
+| Diana      | Lorentz   | 350.00         |
+| Nancy      | Greenberg | 1000.00        |
+| Daniel     | Faviet    | 750.00         |
++------------+-----------+----------------+
+Note: 107 rows returned in MySQL Workbench; first 10 rows shown here.
