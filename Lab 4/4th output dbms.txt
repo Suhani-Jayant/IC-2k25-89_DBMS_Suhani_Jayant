@@ -1,0 +1,394 @@
+MYSQL DBMS ASSIGNMENT - MCA 3rd SEMESTER
+Topic: Aggregate Functions and GROUP BY
+MySQL 8.0 | Oracle HR Employees dataset (107 rows)
+
+Employees Table (data used for all outputs)
+
+employee_id | job_id     | salary   | manager_id | department_id
+------------+------------+----------+------------+--------------
+100         | AD_PRES    | 24000.00 | NULL       | 90
+101         | AD_VP      | 17000.00 | 100        | 90
+102         | AD_VP      | 17000.00 | 100        | 90
+103         | IT_PROG    | 9000.00  | 102        | 60
+104         | IT_PROG    | 6000.00  | 103        | 60
+105         | IT_PROG    | 4800.00  | 103        | 60
+106         | IT_PROG    | 4800.00  | 103        | 60
+107         | IT_PROG    | 4200.00  | 103        | 60
+108         | FI_MGR     | 12008.00 | 101        | 100
+109         | FI_ACCOUNT | 9000.00  | 108        | 100
+110         | FI_ACCOUNT | 8200.00  | 108        | 100
+111         | FI_ACCOUNT | 7700.00  | 108        | 100
+112         | FI_ACCOUNT | 7800.00  | 108        | 100
+113         | FI_ACCOUNT | 6900.00  | 108        | 100
+114         | PU_MAN     | 11000.00 | 100        | 30
+115         | PU_CLERK   | 3100.00  | 114        | 30
+116         | PU_CLERK   | 2900.00  | 114        | 30
+117         | PU_CLERK   | 2800.00  | 114        | 30
+118         | PU_CLERK   | 2600.00  | 114        | 30
+119         | PU_CLERK   | 2500.00  | 114        | 30
+120         | ST_MAN     | 8000.00  | 100        | 50
+121         | ST_MAN     | 8200.00  | 100        | 50
+122         | ST_MAN     | 7900.00  | 100        | 50
+123         | ST_MAN     | 6500.00  | 100        | 50
+124         | ST_MAN     | 5800.00  | 100        | 50
+125         | ST_CLERK   | 3200.00  | 120        | 50
+126         | ST_CLERK   | 2700.00  | 120        | 50
+127         | ST_CLERK   | 2400.00  | 120        | 50
+128         | ST_CLERK   | 2200.00  | 120        | 50
+129         | ST_CLERK   | 3300.00  | 121        | 50
+130         | ST_CLERK   | 2800.00  | 121        | 50
+131         | ST_CLERK   | 2500.00  | 121        | 50
+132         | ST_CLERK   | 2100.00  | 121        | 50
+133         | ST_CLERK   | 3300.00  | 122        | 50
+134         | ST_CLERK   | 2900.00  | 122        | 50
+135         | ST_CLERK   | 2400.00  | 122        | 50
+136         | ST_CLERK   | 2200.00  | 122        | 50
+137         | ST_CLERK   | 3600.00  | 123        | 50
+138         | ST_CLERK   | 3200.00  | 123        | 50
+139         | ST_CLERK   | 2700.00  | 123        | 50
+140         | ST_CLERK   | 2500.00  | 123        | 50
+141         | ST_CLERK   | 3500.00  | 124        | 50
+142         | ST_CLERK   | 3100.00  | 124        | 50
+143         | ST_CLERK   | 2600.00  | 124        | 50
+144         | ST_CLERK   | 2500.00  | 124        | 50
+145         | SA_MAN     | 14000.00 | 100        | 80
+146         | SA_MAN     | 13500.00 | 100        | 80
+147         | SA_MAN     | 12000.00 | 100        | 80
+148         | SA_MAN     | 11000.00 | 100        | 80
+149         | SA_MAN     | 10500.00 | 100        | 80
+150         | SA_REP     | 10000.00 | 145        | 80
+151         | SA_REP     | 9500.00  | 145        | 80
+152         | SA_REP     | 9000.00  | 145        | 80
+153         | SA_REP     | 8000.00  | 145        | 80
+154         | SA_REP     | 7500.00  | 145        | 80
+155         | SA_REP     | 7000.00  | 145        | 80
+156         | SA_REP     | 10000.00 | 146        | 80
+157         | SA_REP     | 9500.00  | 146        | 80
+158         | SA_REP     | 9000.00  | 146        | 80
+159         | SA_REP     | 8000.00  | 146        | 80
+160         | SA_REP     | 7500.00  | 146        | 80
+161         | SA_REP     | 7000.00  | 146        | 80
+162         | SA_REP     | 10500.00 | 147        | 80
+163         | SA_REP     | 9500.00  | 147        | 80
+164         | SA_REP     | 7200.00  | 147        | 80
+165         | SA_REP     | 6800.00  | 147        | 80
+166         | SA_REP     | 6400.00  | 147        | 80
+167         | SA_REP     | 6200.00  | 147        | 80
+168         | SA_REP     | 11500.00 | 148        | 80
+169         | SA_REP     | 10000.00 | 148        | 80
+170         | SA_REP     | 9600.00  | 148        | 80
+171         | SA_REP     | 7400.00  | 148        | 80
+172         | SA_REP     | 7300.00  | 148        | 80
+173         | SA_REP     | 6100.00  | 148        | 80
+174         | SA_REP     | 11000.00 | 149        | 80
+175         | SA_REP     | 8800.00  | 149        | 80
+176         | SA_REP     | 8600.00  | 149        | 80
+177         | SA_REP     | 8400.00  | 149        | 80
+178         | SA_REP     | 7000.00  | 149        | NULL
+179         | SA_REP     | 6200.00  | 149        | 80
+180         | SH_CLERK   | 3200.00  | 120        | 50
+181         | SH_CLERK   | 3100.00  | 120        | 50
+182         | SH_CLERK   | 2500.00  | 120        | 50
+183         | SH_CLERK   | 2800.00  | 120        | 50
+184         | SH_CLERK   | 4200.00  | 121        | 50
+185         | SH_CLERK   | 4100.00  | 121        | 50
+186         | SH_CLERK   | 3400.00  | 121        | 50
+187         | SH_CLERK   | 3000.00  | 121        | 50
+188         | SH_CLERK   | 3800.00  | 122        | 50
+189         | SH_CLERK   | 3600.00  | 122        | 50
+190         | SH_CLERK   | 2900.00  | 122        | 50
+191         | SH_CLERK   | 2500.00  | 122        | 50
+192         | SH_CLERK   | 4000.00  | 123        | 50
+193         | SH_CLERK   | 3900.00  | 123        | 50
+194         | SH_CLERK   | 3200.00  | 123        | 50
+195         | SH_CLERK   | 2800.00  | 123        | 50
+196         | SH_CLERK   | 3100.00  | 124        | 50
+197         | SH_CLERK   | 3000.00  | 124        | 50
+198         | SH_CLERK   | 2600.00  | 124        | 50
+199         | SH_CLERK   | 2600.00  | 124        | 50
+200         | AD_ASST    | 4400.00  | 101        | 10
+201         | MK_MAN     | 13000.00 | 100        | 20
+202         | MK_REP     | 6000.00  | 201        | 20
+203         | HR_REP     | 6500.00  | 101        | 40
+204         | PR_REP     | 10000.00 | 101        | 70
+205         | AC_MGR     | 12008.00 | 101        | 110
+206         | AC_ACCOUNT | 8300.00  | 205        | 110
+
+NULL = no value in the dataset. Columns shown are the ones used by the queries.
+
+============================================================
+Q1. Write a query to list the number of jobs available in the employees table.
+
+SQL Query:
+SELECT COUNT(DISTINCT job_id) AS Number_of_Jobs
+FROM employees;
+
+Output:
+Number_of_Jobs
+--------------
+19
+
+============================================================
+Q2. Write a query to get the total salaries payable to employees.
+
+SQL Query:
+SELECT SUM(salary) AS Total_Salary
+FROM employees;
+
+Output:
+Total_Salary
+------------
+691416.00
+
+============================================================
+Q3. Write a query to get the minimum salary from employees table.
+
+SQL Query:
+SELECT MIN(salary) AS Minimum_Salary
+FROM employees;
+
+Output:
+Minimum_Salary
+--------------
+2100.00
+
+============================================================
+Q4. Write a query to get the maximum salary of an employee working as a Programmer.
+
+SQL Query:
+SELECT MAX(salary) AS Maximum_Salary
+FROM employees
+WHERE job_id = 'IT_PROG';
+
+Output:
+Maximum_Salary
+--------------
+9000.00
+
+============================================================
+Q5. Write a query to get the average salary and number of employees working in department 90.
+
+SQL Query:
+SELECT AVG(salary) AS Average_Salary,
+       COUNT(*) AS Number_of_Employees
+FROM employees
+WHERE department_id = 90;
+
+Output:
+Average_Salary | Number_of_Employees
+---------------+--------------------
+19333.333333   | 3
+
+============================================================
+Q6. Write a query to get the highest, lowest, sum, and average salary of all employees.
+
+SQL Query:
+SELECT MAX(salary) AS Highest_Salary,
+       MIN(salary) AS Lowest_Salary,
+       SUM(salary) AS Total_Salary,
+       AVG(salary) AS Average_Salary
+FROM employees;
+
+Output:
+Highest_Salary | Lowest_Salary | Total_Salary | Average_Salary
+---------------+---------------+--------------+---------------
+24000.00       | 2100.00       | 691416.00    | 6461.831776
+
+============================================================
+Q7. Write a query to get the number of employees with the same job.
+
+SQL Query:
+SELECT job_id,
+       COUNT(*) AS Number_of_Employees
+FROM employees
+GROUP BY job_id;
+
+Output:
+job_id     | Number_of_Employees
+-----------+--------------------
+AC_ACCOUNT | 1
+AC_MGR     | 1
+AD_ASST    | 1
+AD_PRES    | 1
+AD_VP      | 2
+FI_ACCOUNT | 5
+FI_MGR     | 1
+HR_REP     | 1
+IT_PROG    | 5
+MK_MAN     | 1
+MK_REP     | 1
+PR_REP     | 1
+PU_CLERK   | 5
+PU_MAN     | 1
+SA_MAN     | 5
+SA_REP     | 30
+SH_CLERK   | 20
+ST_CLERK   | 20
+ST_MAN     | 5
+
+============================================================
+Q8. Write a query to get the difference between the highest and lowest salaries.
+
+SQL Query:
+SELECT MAX(salary) - MIN(salary) AS Salary_Difference
+FROM employees;
+
+Output:
+Salary_Difference
+-----------------
+21900.00
+
+============================================================
+Q9. Write a query to find the manager ID and the salary of the lowest-paid employee for that manager.
+
+SQL Query:
+SELECT manager_id,
+       MIN(salary) AS Lowest_Salary
+FROM employees
+WHERE manager_id IS NOT NULL
+GROUP BY manager_id;
+
+Output:
+manager_id | Lowest_Salary
+-----------+--------------
+100        | 5800.00
+101        | 4400.00
+102        | 9000.00
+103        | 4200.00
+108        | 6900.00
+114        | 2500.00
+120        | 2200.00
+121        | 2100.00
+122        | 2200.00
+123        | 2500.00
+124        | 2500.00
+145        | 7000.00
+146        | 7000.00
+147        | 6200.00
+148        | 6100.00
+149        | 6200.00
+201        | 6000.00
+205        | 8300.00
+
+============================================================
+Q10. Write a query to get the department ID and the total salary payable in each department.
+
+SQL Query:
+SELECT department_id,
+       SUM(salary) AS Total_Salary
+FROM employees
+GROUP BY department_id;
+
+Output:
+department_id | Total_Salary
+--------------+-------------
+NULL          | 7000.00
+10            | 4400.00
+20            | 19000.00
+30            | 24900.00
+40            | 6500.00
+50            | 156400.00
+60            | 28800.00
+70            | 10000.00
+80            | 304500.00
+90            | 58000.00
+100           | 51608.00
+110           | 20308.00
+
+============================================================
+Q11. Write a query to get the average salary for each job ID excluding programmer.
+
+SQL Query:
+SELECT job_id,
+       AVG(salary) AS Average_Salary
+FROM employees
+WHERE job_id <> 'IT_PROG'
+GROUP BY job_id;
+
+Output:
+job_id     | Average_Salary
+-----------+---------------
+AC_ACCOUNT | 8300.000000
+AC_MGR     | 12008.000000
+AD_ASST    | 4400.000000
+AD_PRES    | 24000.000000
+AD_VP      | 17000.000000
+FI_ACCOUNT | 7920.000000
+FI_MGR     | 12008.000000
+HR_REP     | 6500.000000
+MK_MAN     | 13000.000000
+MK_REP     | 6000.000000
+PR_REP     | 10000.000000
+PU_CLERK   | 2780.000000
+PU_MAN     | 11000.000000
+SA_MAN     | 12200.000000
+SA_REP     | 8350.000000
+SH_CLERK   | 3215.000000
+ST_CLERK   | 2785.000000
+ST_MAN     | 7280.000000
+
+============================================================
+Q12. Write a query to get the total salary, maximum, minimum, average salary of employees (job ID wise), for department ID 90 only.
+
+SQL Query:
+SELECT job_id,
+       SUM(salary) AS Total_Salary,
+       MAX(salary) AS Maximum_Salary,
+       MIN(salary) AS Minimum_Salary,
+       AVG(salary) AS Average_Salary
+FROM employees
+WHERE department_id = 90
+GROUP BY job_id;
+
+Output:
+job_id  | Total_Salary | Maximum_Salary | Minimum_Salary | Average_Salary
+--------+--------------+----------------+----------------+---------------
+AD_PRES | 24000.00     | 24000.00       | 24000.00       | 24000.000000
+AD_VP   | 34000.00     | 17000.00       | 17000.00       | 17000.000000
+
+============================================================
+Q13. Write a query to get the job ID and maximum salary of the employees where maximum salary is greater than or equal to $4000.
+
+SQL Query:
+SELECT job_id,
+       MAX(salary) AS Maximum_Salary
+FROM employees
+GROUP BY job_id
+HAVING MAX(salary) >= 4000;
+
+Output:
+job_id     | Maximum_Salary
+-----------+---------------
+AC_ACCOUNT | 8300.00
+AC_MGR     | 12008.00
+AD_ASST    | 4400.00
+AD_PRES    | 24000.00
+AD_VP      | 17000.00
+FI_ACCOUNT | 9000.00
+FI_MGR     | 12008.00
+HR_REP     | 6500.00
+IT_PROG    | 9000.00
+MK_MAN     | 13000.00
+MK_REP     | 6000.00
+PR_REP     | 10000.00
+PU_MAN     | 11000.00
+SA_MAN     | 14000.00
+SA_REP     | 11500.00
+SH_CLERK   | 4200.00
+ST_MAN     | 8200.00
+
+============================================================
+Q14. Write a query to get the average salary for all departments employing more than 10 employees.
+
+SQL Query:
+SELECT department_id,
+       AVG(salary) AS Average_Salary
+FROM employees
+GROUP BY department_id
+HAVING COUNT(*) > 10;
+
+Output:
+department_id | Average_Salary
+--------------+---------------
+50            | 3475.555556
+80            | 8955.882353
